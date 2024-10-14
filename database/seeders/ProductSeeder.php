@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\Product;
+use Faker\Factory as Faker;
 
 class ProductSeeder extends Seeder
 {
@@ -15,66 +16,43 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $products = [
-            [
-                'name' => 'Aspirin',
-                'category' => 'Tablet',
-                'active_ingredients' => 'Acetylsalicylic Acid',
-                'batch_number' => 'BA12345678',
-                'research_status' => 'Under Development',
-                'manufacturing_date' => '2023-01-10',
-                'expiration_date' => '2025-01-10',
-            ],
-            [
-                'name' => 'Ibuprofen',
-                'category' => 'Capsule',
-                'active_ingredients' => 'Ibuprofen',
-                'batch_number' => 'BA67890253',
-                'research_status' => 'In Clinical Trials',
-                'manufacturing_date' => '2023-02-20',
-                'expiration_date' => '2026-02-20',
-            ],
-            [
-                'name' => 'Paracetamol',
-                'category' => 'Syrup',
-                'active_ingredients' => 'Paracetamol',
-                'batch_number' => 'BA11111111',
-                'research_status' => 'Completed',
-                'manufacturing_date' => '2022-11-30',
-                'expiration_date' => '2024-11-30',
-            ],
-            [
-                'name' => 'Amoxicillin',
-                'category' => 'Injection',
-                'active_ingredients' => 'Amoxicillin, Clavulanic Acid',
-                'batch_number' => 'BA22222222',
-                'research_status' => 'In Clinical Trials',
-                'manufacturing_date' => '2023-05-15',
-                'expiration_date' => '2026-05-15',
-            ],
-            [
-                'name' => 'Omeprazole',
-                'category' => 'Capsule',
-                'active_ingredients' => 'Omeprazole',
-                'batch_number' => 'BA33333333',
-                'research_status' => 'Under Development',
-                'manufacturing_date' => '2023-06-05',
-                'expiration_date' => '2025-06-05',
-            ],
-            [
-                'name' => 'Metformin',
-                'category' => 'Tablet',
-                'active_ingredients' => 'Metformin Hydrochloride',
-                'batch_number' => 'BA44444444',
-                'research_status' => 'Under Development',
-                'manufacturing_date' => '2023-03-22',
-                'expiration_date' => '2026-03-22',
-            ],
+        $faker = Faker::create();  // Create a new Faker instance
+
+        // Generate a manufacturing date from 2023 onwards
+        $manufacturingDate = $faker->dateTimeBetween('2023-01-01', 'now')->format('Y-m-d');
+        // Generate an expiration date at least 1 year and up to 3 years after the manufacturing date
+        $expirationDate = $faker->dateTimeBetween($manufacturingDate, $manufacturingDate . ' +3 years')->format('Y-m-d');
+        
+        // Possible categories and statuses
+        $categories = ['Tablet', 'Capsule', 'Syrup', 'Injection'];
+        $statuses = ['Under Development', 'In Clinical Trials', 'Completed'];
+        $activeIngredients = [
+            'Acetylsalicylic Acid', 
+            'Ibuprofen', 
+            'Paracetamol', 
+            'Amoxicillin, Clavulanic Acid', 
+            'Omeprazole', 
+            'Metformin Hydrochloride', 
+            'Ciprofloxacin', 
+            'Doxycycline', 
+            'Prednisone', 
+            'Simvastatin'
         ];
 
-        foreach ($products as $product) {
-            Product::create(array_merge($product, ['id' => Str::uuid()]));
+        // Seed 5 random products
+        for ($i = 0; $i < 5; $i++) {
+            Product::create([
+                'id' => (string) Str::uuid(),
+                'name' => $faker->randomElement(['Aspirin', 'Ibuprofen', 'Paracetamol', 'Amoxicillin', 'Omeprazole', 'Metformin', 'Ciprofloxacin', 'Doxycycline', 'Prednisone', 'Simvastatin']),
+                'category' => $faker->randomElement($categories),
+                'active_ingredients' => $faker->randomElement($activeIngredients),  // Pick from the list of active ingredients
+                'batch_number' => strtoupper($faker->lexify('??')) . $faker->numerify('########'),  // Generates batch numbers like 'AB12345678'
+                'research_status' => $faker->randomElement($statuses),
+                'manufacturing_date' => $manufacturingDate,
+                'expiration_date' => $expirationDate,
+            ]);
         }
     }
 }
+
 
