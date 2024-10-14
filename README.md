@@ -10,17 +10,34 @@
 
 This is the backend for the Pharmaceutical Product Management system, built with Laravel and Docker using Laravel Sail.
 
+## Frontend
+
+The frontend for this project is being developed separately. You can find it at:
+
+[Frontend Repository](https://github.com/iraklisangeloudis/pharma-frontend) (placeholder link)
+
 ## Prerequisites
 
+Choose your preferred setup method:
+
+### Method 1: Docker Setup
 - Docker
 - Docker Compose
 - WSL2 (for Windows users)
 
+### Method 2: Local Setup
+- PHP 8.2+
+- Composer
+- MySQL 8.0+
+- Laravel 11
+
 ## Setup
+
+### Method 1: Using Docker with Laravel Sail
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/pharma-backend.git
+   git clone https://github.com/iraklisangeloudis/pharma-backend.git
    cd pharma-backend
    ```
 
@@ -63,6 +80,49 @@ This is the backend for the Pharmaceutical Product Management system, built with
    ./vendor/bin/sail artisan migrate
    ```
 
+### Method 2: Local Setup
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/iraklisangeloudis/pharma-backend.git
+   cd pharma-backend
+   ```
+
+2. Install PHP dependencies:
+   ```
+   composer install
+   ```
+
+3. Copy the `.env.example` file to `.env`:
+   ```
+   cp .env.example .env
+   ```
+
+4. Generate application key:
+   ```
+   php artisan key:generate
+   ```
+
+5. Configure your database in the `.env` file:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=pharmaceutical_db
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
+
+6. Run database migrations:
+   ```
+   php artisan migrate
+   ```
+
+7. Start the development server:
+   ```
+   php artisan serve
+   ```
+
 ## API Endpoints
 
 - `GET /api/products`: List all products
@@ -73,22 +133,27 @@ This is the backend for the Pharmaceutical Product Management system, built with
 
 ## Testing
 
-Run the tests using:
+### For Docker Setup:
 ```
 ./vendor/bin/sail artisan test
 ```
 
+### For Local Setup:
+```
+php artisan test
+```
+
 ## Database Seeding
 
+### For Docker Setup:
 ```
 ./vendor/bin/sail artisan db:seed --class=ProductSeeder
 ```
 
-## Frontend
-
-The frontend for this project is being developed separately. You can find it at:
-
-[Frontend Repository](https://github.com/iraklisangeloudis/pharma-frontend) (placeholder link)
+### For Local Setup:
+```
+php artisan db:seed --class=ProductSeeder
+```
 
 ## License
 
