@@ -18,69 +18,12 @@ The frontend for this project is being developed separately. You can find it at:
 
 ## Prerequisites
 
-Choose your preferred setup method:
-
-### Method 1: Docker Setup
-- Docker
-- Docker Compose
-- WSL2 (for Windows users)
-
-### Method 2: Local Setup
 - PHP 8.2+
 - Composer
-- MySQL 8.0+
-- Laravel 11
+- Docker
+- Docker Compose
 
-## Setup
-
-### Method 1: Using Docker with Laravel Sail
-
-1. Clone the repository:
-   ```
-   git clone https://github.com/iraklisangeloudis/pharma-backend.git
-   cd pharma-backend
-   ```
-
-2. Copy the `.env.example` file to `.env` and modify the database credentials if needed:
-   ```
-   cp .env.example .env
-   ```
-   
-   ```
-   DB_CONNECTION=mysql
-   DB_HOST=mysql
-   DB_PORT=3306
-   DB_DATABASE=pharmaceutical_db
-   DB_USERNAME=sail
-   DB_PASSWORD=password
-   ```
-
-3. Install dependencies using Laravel Sail:
-   ```
-   docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php82-composer:latest \
-    composer install --ignore-platform-reqs
-   ```
-
-4. Start the Docker environment:
-   ```
-   ./vendor/bin/sail up -d
-   ```
-
-5. Generate application key:
-   ```
-   ./vendor/bin/sail artisan key:generate
-   ```
-
-6. Run database migrations:
-   ```
-   ./vendor/bin/sail artisan migrate
-   ```
-
-### Method 2: Local Setup
+## Setup Instructions
 
 1. Clone the repository:
    ```
@@ -98,29 +41,34 @@ Choose your preferred setup method:
    cp .env.example .env
    ```
 
-4. Generate application key:
-   ```
-   php artisan key:generate
-   ```
-
-5. Configure your database in the `.env` file:
+4. Modify the `.env` file to use the following database credentials:
    ```
    DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
+   DB_HOST=mysql
    DB_PORT=3306
    DB_DATABASE=pharmaceutical_db
-   DB_USERNAME=your_username
-   DB_PASSWORD=your_password
+   DB_USERNAME=sail
+   DB_PASSWORD=password
    ```
 
-6. Run database migrations:
+5. Install Laravel Sail:
    ```
-   php artisan migrate
+   php artisan sail:install
    ```
 
-7. Start the development server:
+6. Start the Docker environment:
    ```
-   php artisan serve
+   ./vendor/bin/sail up -d
+   ```
+
+7. Generate application key:
+   ```
+   ./vendor/bin/sail artisan key:generate
+   ```
+
+8. Run database migrations:
+   ```
+   ./vendor/bin/sail artisan migrate
    ```
 
 ## API Endpoints
@@ -133,26 +81,14 @@ Choose your preferred setup method:
 
 ## Testing
 
-### For Docker Setup:
 ```
 ./vendor/bin/sail artisan test
 ```
 
-### For Local Setup:
-```
-php artisan test
-```
-
 ## Database Seeding
 
-### For Docker Setup:
 ```
 ./vendor/bin/sail artisan db:seed --class=ProductSeeder
-```
-
-### For Local Setup:
-```
-php artisan db:seed --class=ProductSeeder
 ```
 
 ## License
