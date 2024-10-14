@@ -10,7 +10,7 @@ class ProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function it_can_create_a_product()
+    public function test_it_can_create_a_product()
     {
         $data = [
             'name' => 'Aspirin',
@@ -32,7 +32,7 @@ class ProductTest extends TestCase
         $this->assertDatabaseHas('products', $data);
     }
 
-    public function it_can_fetch_all_products()
+    public function test_it_can_fetch_all_products()
     {
         // Create a few products in the database
         Product::factory()->create(['name' => 'Aspirin']);
@@ -48,7 +48,7 @@ class ProductTest extends TestCase
         $response->assertJsonCount(2); 
     }
 
-    public function it_can_update_a_product()
+    public function test_it_can_update_a_product()
     {
         // Create a product in the database
         $product = Product::factory()->create([
