@@ -55,7 +55,7 @@ class ProductController extends Controller
         // Create the product
         $product = Product::create($validatedData);
         
-        return response()->json($product, 201);
+        return response()->json(null, 201);
     }
 
     /**
@@ -84,32 +84,39 @@ class ProductController extends Controller
 
         // Validate the input data
         $validatedData = $request->validate([
-            'name' => 'sometimes|required|string',
-            'category' => 'sometimes|required|string',
-            'active_ingredients' => 'sometimes|required|string',
+            'name' => 'sometimes|string',
+            'category' => 'sometimes|string',
+            'active_ingredients' => 'sometimes|string',
             // The $id at the end tells Laravel to ignore the current product's ID when checking for uniqueness
             'batch_number' => [
                 'sometimes',
-                'required',
                 'string',
                 'unique:products,batch_number,' . $id,
                 'regex:/^[A-Z]{2}\d{8}$/' // Enforces format like 'AB12345678'
             ],
-            'research_status' => 'sometimes|required|string',
-            'manufacturing_date' => 'sometimes|required|date_format:Y-m-d',
-            'expiration_date' => 'sometimes|required|date_format:Y-m-d|after:manufacturing_date',
+            'research_status' => 'sometimes|string',
+            'manufacturing_date' => 'sometimes|date_format:Y-m-d',
+            'expiration_date' => 'sometimes|date_format:Y-m-d|after:manufacturing_date',
         ]);
 
         // Sanitize inputs to prevent Cross-Site Scripting (XSS attacks).
-        $validatedData['name'] = strip_tags($validatedData['name']);
-        $validatedData['category'] = strip_tags($validatedData['category']);
-        $validatedData['active_ingredients'] = strip_tags($validatedData['active_ingredients']);
-        $validatedData['research_status'] = strip_tags($validatedData['research_status']);
+        if ($request->has('name')) {
+            $validatedData['name'] = strip_tags($validatedData['name']);
+        }
+        if ($request->has('category')) {
+            $validatedData['category'] = strip_tags($validatedData['category']);
+        }
+        if ($request->has('active_ingredients')) {
+            $validatedData['active_ingredients'] = strip_tags($validatedData['active_ingredients']);
+        }
+        if ($request->has('research_status')) {
+            $validatedData['research_status'] = strip_tags($validatedData['research_status']);
+        }
         
         // Update the product
         $product->update($validatedData);
 
-        return response()->json($product, 200);
+        return response()->json(null, 200);
     }
 
     /**
