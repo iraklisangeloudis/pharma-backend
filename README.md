@@ -14,7 +14,7 @@ This is the backend for the Pharmaceutical Product Management system, built with
 
 The frontend for this project is being developed separately. You can find it at:
 
-[Frontend Repository](https://github.com/iraklisangeloudis/pharma-frontend) (placeholder link)
+[Frontend Repository](https://github.com/iraklisangeloudis/pharma-frontend)
 
 ## Prerequisites
 
