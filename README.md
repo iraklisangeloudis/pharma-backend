@@ -41,27 +41,17 @@ The frontend for this project is being developed separately. You can find it at:
    cp .env.example .env
    ```
 
-4. Modify the `.env` file to use the following database credentials:
-   ```
-   DB_CONNECTION=mysql
-   DB_HOST=mysql
-   DB_PORT=3306
-   DB_DATABASE=pharmaceutical_db
-   DB_USERNAME=sail
-   DB_PASSWORD=password
-   ```
-
-5. Start the Docker environment:
+4. Start the Docker environment:
    ```
    ./vendor/bin/sail up -d
    ```
 
-6. Generate application key:
+5. Generate application key:
    ```
    ./vendor/bin/sail artisan key:generate
    ```
 
-7. Run database migrations:
+6. Run database migrations:
    ```
    ./vendor/bin/sail artisan migrate
    ```
