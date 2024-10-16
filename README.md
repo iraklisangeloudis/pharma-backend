@@ -51,22 +51,17 @@ The frontend for this project is being developed separately. You can find it at:
    DB_PASSWORD=password
    ```
 
-5. Install Laravel Sail:
-   ```
-   php artisan sail:install
-   ```
-
-6. Start the Docker environment:
+5. Start the Docker environment:
    ```
    ./vendor/bin/sail up -d
    ```
 
-7. Generate application key:
+6. Generate application key:
    ```
    ./vendor/bin/sail artisan key:generate
    ```
 
-8. Run database migrations:
+7. Run database migrations:
    ```
    ./vendor/bin/sail artisan migrate
    ```
